@@ -1,14 +1,16 @@
 import {createBrowserRouter, RouteObject} from 'react-router-dom';
-import {Register} from '../pages/register';
+import {Register} from '@/pages/register';
 import {App} from './root';
-import {Login} from '../pages/login';
+import {Spa} from '@/pages/spa';
+import {Login} from '@/pages/login';
 
 
 const routes: RouteObject[] = [{
     path: '/',
     element: <App/>,
     children: [
-        {index: true, Component: Login},
+        {index: true, Component: Spa},
+        {path: "login", Component: Login},
         {path: "register", Component: Register}
     ],
 }];
