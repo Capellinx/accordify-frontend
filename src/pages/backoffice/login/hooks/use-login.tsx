@@ -1,7 +1,9 @@
 import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
 import { api } from "@/services"
 import { ENDPOINTS } from "@/shared/endpoints"
+import { Paths } from "@/shared/paths"
 import { useMutation } from "@tanstack/react-query"
+import { useNavigate } from "react-router-dom"
 
 interface LoginRequest {
    email: string
@@ -17,6 +19,7 @@ interface LoginResponse {
 
 export function useBackofficeLogin() {
    const { setInformationOnLocalStorage } = useAuthBackOffice()
+   const navigate = useNavigate()
 
    const { mutate } = useMutation({
       mutationKey: ['backoffice-login'],
@@ -38,6 +41,7 @@ export function useBackofficeLogin() {
             name,
             access_token
          })
+         navigate(Paths.backoffice.dashboard)
       }
    })
 
