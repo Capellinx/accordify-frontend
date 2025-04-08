@@ -1,17 +1,20 @@
-import {createBrowserRouter, RouteObject} from 'react-router-dom';
-import {Register} from '@/pages/register';
-import {App} from './root';
-import {Spa} from '@/pages/spa';
-import {Login} from '@/pages/login';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
+import { App } from './root';
+import { Login } from '@/pages/backoffice/login';
+import { AuthLayout } from '@/layouts/auth-layout';
+import { Paths } from '@/shared/paths';
 
 
 const routes: RouteObject[] = [{
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
-        {index: true, Component: Spa},
-        {path: "login", Component: Login},
-        {path: "register", Component: Register}
+        { children: [{
+            element: <AuthLayout />,
+            children: [
+                { path: Paths.backoffice.login, Component: Login }
+            ]
+        }]}
     ],
 }];
 
