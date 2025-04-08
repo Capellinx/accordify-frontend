@@ -1,7 +1,7 @@
 import {Outlet} from 'react-router-dom';
 import {Providers} from './providers';
 
-export function App() {
+export function Root() {
   return (
     <Providers>
       <Outlet/>
