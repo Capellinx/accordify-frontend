@@ -1,3 +1,4 @@
+import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
 import { api } from "@/services"
 import { ENDPOINTS } from "@/shared/endpoints"
 import { useMutation } from "@tanstack/react-query"
@@ -7,7 +8,15 @@ interface LoginRequest {
    password: string
 }
 
+interface LoginResponse {
+   manager: {
+      name: string
+   },
+   access_token: string
+}
+
 export function useBackofficeLogin() {
+   const { setInformationOnLocalStorage } = useAuthBackOffice()
 
    const { mutate } = useMutation({
       mutationKey: ['backoffice-login'],
@@ -23,6 +32,12 @@ export function useBackofficeLogin() {
          } catch (error) {
             console.log(error)
          }
+      },
+      onSuccess: ({ manager: { name }, access_token }: LoginResponse) => {
+         setInformationOnLocalStorage({
+            name,
+            access_token
+         })
       }
    })
 
