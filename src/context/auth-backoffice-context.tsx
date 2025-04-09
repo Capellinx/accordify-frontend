@@ -1,7 +1,7 @@
 
 import { LOCALSTORAGE } from '@/shared/local-storage-keys';
 import { Paths } from '@/shared/paths';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Manager {
@@ -35,17 +35,6 @@ export function AuthBackOfficeProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem(LOCALSTORAGE.BACKOFFICE.LOGIN)
       navigate(Paths.backoffice.login)
    }
-
-   useEffect(() => {
-      const access_token = localStorage.getItem(LOCALSTORAGE.BACKOFFICE.LOGIN);
-
-      if (!access_token) {
-         navigate(Paths.backoffice.login);
-      } else {
-         navigate(Paths.backoffice.dashboard);
-      }
-
-   }, [navigate, manager]);
 
    return (
       <AuthBackofficeContext.Provider value={{
