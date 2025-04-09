@@ -54,12 +54,10 @@ export function Login() {
                <p className="text-red-500 font-medium">E-mail ou senha incorretos.</p>
             </div>
          )}
-         <Card className="h-100">
+         <Card className="h-100 bg-white text-black shadow-lg">
             <CardHeader className="text-center">
                <CardTitle className="text-xl">Bem vindo de volta</CardTitle>
-               <CardDescription>
-                  Entre com seu e-mail institucional
-               </CardDescription>
+               <CardDescription>Entre com seu e-mail institucional</CardDescription>
             </CardHeader>
             <CardContent>
                <Form {...form}>
@@ -144,6 +142,7 @@ export function Login() {
                </Form>
             </CardContent>
          </Card>
+
       </div>
    )
 }

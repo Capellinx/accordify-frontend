@@ -37,13 +37,15 @@ export function AuthBackOfficeProvider({ children }: { children: ReactNode }) {
    }
 
    useEffect(() => {
-      const access_token = localStorage.getItem(LOCALSTORAGE.BACKOFFICE.LOGIN)
+      const access_token = localStorage.getItem(LOCALSTORAGE.BACKOFFICE.LOGIN);
 
       if (!access_token) {
-         navigate(Paths.backoffice.login)
+         navigate(Paths.backoffice.login);
+      } else {
+         navigate(Paths.backoffice.dashboard);
       }
-      
-   }, [navigate])
+
+   }, [navigate, manager]);
 
    return (
       <AuthBackofficeContext.Provider value={{
