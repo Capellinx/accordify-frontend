@@ -46,10 +46,11 @@ export function useBackofficeLogin() {
       },
       onError: (error) => {
          if(error instanceof AxiosError){
-            setError(error.response?.data)
+            return setError(error.response?.data)
          }
-
-         console.log(error)
+      },
+      onMutate: () => {
+         setError(null)
       }
    })
 
