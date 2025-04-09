@@ -3,6 +3,8 @@ import { api } from "@/services"
 import { ENDPOINTS } from "@/shared/endpoints"
 import { Paths } from "@/shared/paths"
 import { useMutation } from "@tanstack/react-query"
+import { AxiosError } from "axios"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 interface LoginRequest {
@@ -18,23 +20,22 @@ interface LoginResponse {
 }
 
 export function useBackofficeLogin() {
+   const [error, setError] = useState<string | null>(null)
    const { setInformationOnLocalStorage } = useAuthBackOffice()
+   
    const navigate = useNavigate()
 
-   const { mutate } = useMutation({
+   const { mutate, isPending } = useMutation({
       mutationKey: ['backoffice-login'],
       mutationFn: async ({ email, password }: LoginRequest) => {
-         try {
-            const { data } = await api.post(ENDPOINTS.BACKOFFICE.LOGIN, {
-               email,
-               password
-            })
+         const { data } = await api.post(ENDPOINTS.BACKOFFICE.LOGIN, {
+            email,
+            password
+         })
 
-            console.log(data)
-            return data
-         } catch (error) {
-            console.log(error)
-         }
+         setError(null)
+
+         return data
       },
       onSuccess: ({ manager: { name }, access_token }: LoginResponse) => {
          setInformationOnLocalStorage({
@@ -42,10 +43,19 @@ export function useBackofficeLogin() {
             access_token
          })
          navigate(Paths.backoffice.dashboard)
+      },
+      onError: (error) => {
+         if(error instanceof AxiosError){
+            setError(error.response?.data)
+         }
+
+         console.log(error)
       }
    })
 
    return {
-      submitLogin: mutate
+      submitLogin: mutate,
+      isPending,
+      error
    }
 }
