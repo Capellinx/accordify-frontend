@@ -22,6 +22,7 @@ import { useBackofficeLogin } from "./hooks/use-login"
 import { useState } from "react"
 import { Eye, EyeClosedIcon, TriangleAlert } from "lucide-react"
 import ClipLoader from "react-spinners/ClipLoader";
+import { Paths } from "@/shared/paths"
 
 export function Login() {
    const [showPassword, setShowPassword] = useState(false)
@@ -88,7 +89,7 @@ export function Login() {
                                        <div className="flex items-center">
                                           <FormLabel>Senha</FormLabel>
                                           <a
-                                             href="#"
+                                             href={Paths.backoffice.resetPassword}
                                              className="ml-auto text-sm underline-offset-4 hover:underline text-[#2C7FFF]"
                                           >
                                              Esqueceu sua senha?
@@ -133,7 +134,7 @@ export function Login() {
                                     data-testid="loader"
                                  />
                               ) : (
-                                 "Entrar"
+                                    <p className="text-white">Entrar</p>
                               )}
                            </Button>
                         </div>
