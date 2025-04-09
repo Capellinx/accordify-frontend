@@ -5,6 +5,7 @@ import { AuthLayout } from '@/layouts/auth-layout';
 import { Paths } from '@/shared/paths';
 import { Dashboard } from '@/pages/backoffice/dashboard';
 import { AuthBackofficeProtected } from './auth-protected/auth-backoffice-protected';
+import { BackOfficeLayout } from '@/layouts/backoffice-layout';
 
 
 const routes: RouteObject[] = [{
@@ -20,8 +21,12 @@ const routes: RouteObject[] = [{
             },
             {children: [{
                 element: <AuthBackofficeProtected/>,
-                children: [
-                    { path: Paths.backoffice.dashboard, Component: Dashboard }
+                children: [{
+                    element: <BackOfficeLayout />,
+                    children: [
+                        { path: Paths.backoffice.dashboard, Component: Dashboard }
+                    ]
+                }
                 ]
             }]},
         ],
