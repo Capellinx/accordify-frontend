@@ -5,6 +5,7 @@ import { Paths } from "@/shared/paths"
 import { useMutation } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 import { useState } from "react"
+import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
 
 interface LoginRequest {
@@ -22,7 +23,7 @@ interface LoginResponse {
 export function useBackofficeLogin() {
    const [error, setError] = useState<string | null>(null)
    const { setInformationOnLocalStorage } = useAuthBackOffice()
-   
+
    const navigate = useNavigate()
 
    const { mutate, isPending } = useMutation({
@@ -43,14 +44,17 @@ export function useBackofficeLogin() {
             access_token
          })
          navigate(Paths.backoffice.dashboard)
+
+         toast.success('Logged in successfully!', {
+            duration: 3000,
+            position: 'top-right'
+         })
       },
       onError: (error) => {
-         if(error instanceof AxiosError){
-            return setError(error.response?.data)
+         if (error instanceof AxiosError) {
+               toast.error('Login failed. Please try again.')
+            setError(error.response?.data)
          }
-      },
-      onMutate: () => {
-         setError(null)
       }
    })
 
