@@ -7,11 +7,11 @@ const queryClient = new QueryClient();
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthBackOfficeProvider>
-        <main>
-          {children}
-        </main>
-      </AuthBackOfficeProvider>
+        <AuthBackOfficeProvider>
+            <main>
+              {children}
+            </main>
+        </AuthBackOfficeProvider>
     </QueryClientProvider>
   );
 }
