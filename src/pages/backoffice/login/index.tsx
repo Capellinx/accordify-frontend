@@ -34,7 +34,6 @@ export function Login() {
          email: "",
          password: ""
       },
-      mode: "onChange",
       resolver: zodResolver(loginSchema)
    })
 
@@ -73,7 +72,7 @@ export function Login() {
                                     <FormItem>
                                        <FormLabel>E-mail</FormLabel>
                                        <FormControl>
-                                          <Input placeholder="exemplo@email.com" {...field} />
+                                          <Input placeholder="exemplo@email.com" {...field} className="border-2" />
                                        </FormControl>
                                        <FormMessage />
                                     </FormItem>
@@ -100,6 +99,7 @@ export function Login() {
                                              <Input
                                                 placeholder="*********"
                                                 type={showPassword ? "text" : "password"}
+                                                className="border-2"
                                                 {...field}
                                              />
                                              <div className="absolute right-4 top-2">
