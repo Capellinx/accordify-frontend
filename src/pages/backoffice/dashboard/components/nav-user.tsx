@@ -27,6 +27,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { ModeToggle } from "../../../../components/mode-toggle"
+import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
 
 export function NavUser({
   user,
@@ -37,6 +38,7 @@ export function NavUser({
     avatar: string
   }
 }) {
+  const { logout } = useAuthBackOffice()
   const { isMobile } = useSidebar()
 
   return (
@@ -98,7 +100,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer" onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
