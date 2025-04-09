@@ -1,5 +1,5 @@
 import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
-import { api } from "@/services"
+import { api } from "@/lib/axios"
 import { ENDPOINTS } from "@/shared/endpoints"
 import { Paths } from "@/shared/paths"
 import { useMutation } from "@tanstack/react-query"
