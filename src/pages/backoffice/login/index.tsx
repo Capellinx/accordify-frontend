@@ -20,14 +20,20 @@ import { loginSchema, LoginSchema } from "./schema/login-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useBackofficeLogin } from "./hooks/use-login"
 import { useState } from "react"
-import { Eye, EyeClosedIcon } from "lucide-react"
+import { Eye, EyeClosedIcon, TriangleAlert } from "lucide-react"
+import ClipLoader from "react-spinners/ClipLoader";
 
 export function Login() {
    const [showPassword, setShowPassword] = useState(false)
 
-   const { submitLogin } = useBackofficeLogin()
+   const { submitLogin, isPending, error } = useBackofficeLogin()
 
-   const form = useForm({
+   const form = useForm<LoginSchema>({
+      defaultValues: {
+         email: "",
+         password: ""
+      },
+      mode: "onChange",
       resolver: zodResolver(loginSchema)
    })
 
@@ -36,10 +42,18 @@ export function Login() {
          email,
          password
       })
+
+      form.reset()
    }
 
    return (
       <div className="flex flex-col gap-6 w-md" >
+         {error && (
+            <div className="border border-red-500 p-4 bg-[#FFE4E2] rounded-md flex items-center gap-2 opacity-0 transition-opacity duration-500 ease-in-out animate-fadeIn">
+               <TriangleAlert className="text-red-500" />
+               <p className="text-red-500 font-medium">E-mail ou senha incorretos.</p>
+            </div>
+         )}
          <Card className="h-100">
             <CardHeader className="text-center">
                <CardTitle className="text-xl">Bem vindo de volta</CardTitle>
@@ -110,8 +124,19 @@ export function Login() {
                            </div>
                            <Button
                               type="submit"
+                              disabled={isPending}
                               className="w-full bg-[#2C7FFF] cursor-pointer hover:bg-[#1F5AC7] hover:font-bold">
-                              Entrar
+                              {isPending ? (
+                                 <ClipLoader
+                                    color="#ffff"
+                                    loading={isPending}
+                                    size={20}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
+                                 />
+                              ) : (
+                                 "Entrar"
+                              )}
                            </Button>
                         </div>
                      </div>
