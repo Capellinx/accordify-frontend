@@ -42,7 +42,7 @@ export function NavUser({
   const { isMobile } = useSidebar()
 
   return (
-    <SidebarMenu>
+    <SidebarMenu className="z-30 bg-white rounded-sm">
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
