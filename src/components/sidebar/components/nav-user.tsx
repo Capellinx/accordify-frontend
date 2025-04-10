@@ -26,7 +26,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ModeToggle } from "../../mode-toggle"
 import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
 
 export function NavUser({
@@ -80,10 +79,10 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup className="flex items-center gap-2">
+            {/* <DropdownMenuGroup className="flex items-center gap-2">
                 <ModeToggle />
                 <p className="text-sm">Tema do sistema</p>
-            </DropdownMenuGroup>
+            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
