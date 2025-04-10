@@ -9,7 +9,7 @@ import {
    SidebarHeader,
    SidebarRail,
 } from "@/components/ui/sidebar"
-import { data } from "./constants"
+import { SIDEBAR_CONTROL } from "./constants"
 
 export function SidebarLayout({ ...props }: React.ComponentProps<typeof Sidebar>) {
    return (
@@ -18,10 +18,10 @@ export function SidebarLayout({ ...props }: React.ComponentProps<typeof Sidebar>
             <TeamSwitcher />
          </SidebarHeader>
          <SidebarContent>
-            <NavProjects projects={data.projects} />
+            <NavProjects projects={SIDEBAR_CONTROL.projects} />
          </SidebarContent>
          <SidebarFooter>
-            <NavUser user={data.user} />
+            <NavUser user={SIDEBAR_CONTROL.user} />
          </SidebarFooter>
          <SidebarRail />
       </Sidebar>
