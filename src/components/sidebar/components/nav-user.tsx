@@ -26,7 +26,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ModeToggle } from "../../../../components/mode-toggle"
+import { ModeToggle } from "../../mode-toggle"
 import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
 
 export function NavUser({
