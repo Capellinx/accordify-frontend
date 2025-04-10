@@ -7,9 +7,9 @@ import {
    SidebarContent,
    SidebarFooter,
    SidebarHeader,
-   SidebarRail,
 } from "@/components/ui/sidebar"
 import { SIDEBAR_CONTROL } from "./constants"
+import { Bubbles } from "./components/bubble"
 
 export function SidebarLayout({ ...props }: React.ComponentProps<typeof Sidebar>) {
    return (
@@ -20,10 +20,10 @@ export function SidebarLayout({ ...props }: React.ComponentProps<typeof Sidebar>
          <SidebarContent>
             <NavProjects projects={SIDEBAR_CONTROL.projects} />
          </SidebarContent>
-         <SidebarFooter>
+         <SidebarFooter className="relative group">
             <NavUser user={SIDEBAR_CONTROL.user} />
+            <Bubbles />
          </SidebarFooter>
-         <SidebarRail />
       </Sidebar>
    )
 }
