@@ -1,4 +1,4 @@
-import { CreateClientModal } from "@/components/modals/create-client-modal";
+import { CreateClientModal } from "@/pages/backoffice/clients/modals/create-client-modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
