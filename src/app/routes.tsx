@@ -3,10 +3,10 @@ import { Root } from './root';
 import { Login } from '@/pages/backoffice/login';
 import { AuthLayout } from '@/layouts/auth-layout';
 import { Paths } from '@/shared/paths';
-import { Dashboard } from '@/pages/backoffice/dashboard';
 import { AuthBackofficeProtected } from './auth-protected/auth-backoffice-protected';
 import { BackOfficeLayout } from '@/layouts/backoffice-layout';
 import { ResetPassword } from '@/pages/backoffice/reset-password';
+import { Clients } from '@/pages/backoffice/clients';
 
 
 const routes: RouteObject[] = [{
@@ -26,7 +26,7 @@ const routes: RouteObject[] = [{
                 children: [{
                     element: <BackOfficeLayout />,
                     children: [
-                        { path: Paths.backoffice.dashboard, Component: Dashboard }
+                        { path: Paths.backoffice.clients, Component: Clients }
                     ]
                 }]
             }]},
