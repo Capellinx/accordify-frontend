@@ -2,7 +2,7 @@ export const Paths = {
    backoffice: {
       login: "/backoffice/login",
       dashboard: "/backoffice/dashboard",
-      clients: "/backoffice/clients",
+      clients: "/backoffice/dashboard",
       resetPassword: "/backoffice/reset-password"
    }
 }
