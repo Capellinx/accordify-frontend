@@ -1,17 +1,23 @@
 import { useForm } from "react-hook-form"
-import { Client, clientSchema } from "../schemas/client.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import axios, { AxiosError } from "axios"
 import { LOCALSTORAGE } from "@/shared/local-storage-keys"
 import { useState } from "react"
+import { Client, clientSchema } from "../components/create-client-modal/schemas/client.schema"
+import { useModal } from "@/hooks/use-modal"
 
 
 export function useCreateClientForm() {
    const access_token = localStorage.getItem(LOCALSTORAGE.BACKOFFICE.LOGIN)
-   const key = 'create-client-id'
    const [error, setError] = useState<string | null>(null)
+   
+   const key = 'create-client-id'
+
+   const queryClient = useQueryClient()
+
+   const { close } = useModal()
 
    const form = useForm<Client>({
       resolver: zodResolver(clientSchema),
@@ -44,6 +50,13 @@ export function useCreateClientForm() {
          if (context?.toastId) {
             toast.success('Cliente criado com sucesso!', { id: context.toastId })
          }
+
+         queryClient.invalidateQueries({
+            queryKey: ['fetch-all-clients']
+         })
+         
+         form.reset()
+         close()
       }
    })
 
