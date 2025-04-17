@@ -1,15 +1,16 @@
-import { Form, FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import userImage from "@/assets/png/user.png"
-import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
+import { useCreateClientForm } from "../hooks/use-create-client-form";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export function CreateClientForm() {
-   const form = useForm()
-
    const [logo, setLogo] = useState<string | null>(null);
+   const { form, onSubmit, isPending } = useCreateClientForm()
+
    const fileInputRef = useRef<HTMLInputElement>(null);
 
    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +27,7 @@ export function CreateClientForm() {
 
    return (
       <Form {...form}>
-         <form className="space-y-6">
+         <form className="space-y-6" onSubmit={form.handleSubmit((v) => onSubmit(v))}>
             <div className="flex justify-center">
                <div className="relative w-32 h-32">
                   <img
@@ -55,13 +56,14 @@ export function CreateClientForm() {
 
             <FormField
                control={form.control}
-               name="companyName"
+               name="socialReason"
                render={({ field }) => (
                   <FormItem>
                      <FormLabel>Razão Social</FormLabel>
                      <FormControl>
                         <Input placeholder="Digite a razão social" {...field} />
                      </FormControl>
+                     <FormMessage/> 
                   </FormItem>
                )}
             />
@@ -75,6 +77,7 @@ export function CreateClientForm() {
                      <FormControl>
                         <Input placeholder="00.000.000/0000-00" {...field} />
                      </FormControl>
+                     <FormMessage />
                   </FormItem>
                )}
             />
@@ -88,11 +91,27 @@ export function CreateClientForm() {
                      <FormControl>
                         <Input type="email" placeholder="email@empresa.com" {...field} />
                      </FormControl>
+                     <FormMessage />
                   </FormItem>
                )}
             />
 
-            <Button type="submit" className="w-full bg-[#2A86F5] hover:bg-[#0961DC] cursor-pointer">Criar</Button>
+            <Button
+               type="submit"
+               className="w-full bg-[#2A86F5] hover:bg-[#0961DC] cursor-pointer"
+            >
+               {isPending ? (
+                  <ClipLoader
+                     color="#ffff"
+                     loading={isPending}
+                     size={20}
+                     aria-label="Loading Spinner"
+                     data-testid="loader"
+                  />
+               ) : (
+                  <p className="text-white">Entrar</p>
+               )}
+            </Button>
          </form>
       </Form>
    )

@@ -1,11 +1,12 @@
-import { CreateClientModal } from "@/pages/backoffice/clients/modals/create-client-modal";
+import { CreateClientModal } from "@/pages/backoffice/clients/components/create-client-modal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useModal } from "@/hooks/use-modal";
 import { Plus, Search } from "lucide-react";
+import { TableContent } from './components/table-content/index';
 
 
 export function Clients() {
@@ -13,8 +14,7 @@ export function Clients() {
 
    return (
       <section className="w-full">
-         <div className="w-full max-w-6xl">
-
+         <div className="w-full max-w-7xl">
             <header className="flex items-center justify-between">
                <div>
                   <h1 className="text-2xl font-bold">Clientes</h1>
@@ -31,7 +31,7 @@ export function Clients() {
             </header>
 
             <div className="mt-10">
-               <Card className="shadow-md rounded-sm">
+               <Card className=" ">
                   <CardHeader className="flex">
                      <div className="relative flex-1">
                         <Input type="text" className="w-full pl-10" placeholder="Buscar por razão ou cnpj" />
@@ -42,28 +42,21 @@ export function Clients() {
                      </Button>
                   </CardHeader>
                   <Separator />
-
                   <CardContent>
-                     <Table>
-                        <TableHeader>
-                           <TableRow className="bg-[#F4F6F8]">
-                              <TableHead>Nome</TableHead>
-                              <TableHead>CNPJ</TableHead>
-                              <TableHead>Status</TableHead>
-                           </TableRow>
-                        </TableHeader>
-                        <div className="mt-5"></div>
-                        <TableBody >
-                           <TableRow className="mt-4">
-                              <TableCell
-                                 colSpan={3}
-                                 className="text-center  p-10 hover:none bg-[#FBFBFC] text-zinc-900 text-md font-medium"
-                              >
-                                 Sem dados para mostrar.
-                              </TableCell>
-                           </TableRow>
-                        </TableBody>
-                     </Table>
+                     <div className="overflow-x-auto rounded-sm shadow-md border border-zinc-200">
+                        <Table className="min-w-full text-sm text-zinc-700">
+                           <TableHeader>
+                              <TableRow className="bg-[#F4F6F8] text-zinc-600 uppercase text-xs tracking-wider">
+                                 <TableHead className="px-6 py-4 text-left">Nome</TableHead>
+                                 <TableHead className="px-6 py-4 text-left">CNPJ</TableHead>
+                                 <TableHead className="px-6 py-4 text-left">email</TableHead>
+                              </TableRow>
+                           </TableHeader>
+                           <TableBody>
+                              <TableContent />
+                           </TableBody>
+                        </Table>
+                     </div>
                   </CardContent>
                </Card>
             </div>
