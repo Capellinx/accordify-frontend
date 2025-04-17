@@ -17,19 +17,18 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Paths } from "@/shared/paths"
-import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import { useForgotPasswordForm } from "./hooks/use-forgot-passowrd-form"
+import ClipLoader from "react-spinners/ClipLoader"
 
 
 export function ResetPassword() {
-   const form = useForm()
+   const { form, onSubmit, isPending } = useForgotPasswordForm()
 
    const navigate = useNavigate()
 
-   function handleSubmit() {
-   }
    return (
-      <Card className="h-70 bg-white text-black shadow-lg w-md">
+      <Card className="h-90 bg-white text-black shadow-lg w-md">
          <CardHeader className="text-center">
             <CardTitle className="text-xl">Problemas com sua senha?</CardTitle>
             <CardDescription>
@@ -38,7 +37,7 @@ export function ResetPassword() {
          </CardHeader>
          <CardContent className="">
             <Form {...form}>
-               <form onSubmit={form.handleSubmit(handleSubmit)}>
+               <form onSubmit={form.handleSubmit((v) => onSubmit(v))}>
                   <div className="flex flex-col gap-4">
                      <div>
                         <FormField
@@ -58,14 +57,26 @@ export function ResetPassword() {
 
                      <Button
                         type="submit"
-                        className="w-full bg-[#2C7FFF] cursor-pointer hover:bg-[#1F5AC7] hover:font-bold">
-                        <p className="text-white">Recuperar</p>
+                        className="w-full bg-[#2C7FFF] cursor-pointer hover:bg-[#1F5AC7] hover:font-bold"
+                        disabled={isPending}
+                     >
+                        {isPending ? (
+                           <ClipLoader
+                              color="#ffff"
+                              loading={isPending}
+                              size={20}
+                              aria-label="Loading Spinner"
+                              data-testid="loader"
+                           />
+                        ) : (
+                           <p className="text-white">Recuperar</p>
+                        )}
                      </Button>
                   </div>
                </form>
             </Form>
          </CardContent>
-         <CardFooter className="flex items-center justify-center gap-4">
+         <CardFooter className="flex justify-center h-full gap-4">
             <p className="text-sm text-muted-foreground">
                Lembrou a senha?
                <span
