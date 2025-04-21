@@ -7,6 +7,7 @@ import { AuthBackofficeProtected } from './auth-protected/auth-backoffice-protec
 import { BackOfficeLayout } from '@/layouts/backoffice-layout';
 import { ResetPassword } from '@/pages/backoffice/reset-password';
 import { Clients } from '@/pages/backoffice/clients';
+import { Users } from '@/pages/backoffice/users/table-users';
 
 
 const routes: RouteObject[] = [{
@@ -21,15 +22,18 @@ const routes: RouteObject[] = [{
                     { path: Paths.backoffice.resetPassword, Component: ResetPassword },
                 ]
             },
-            {children: [{
-                element: <AuthBackofficeProtected/>,
+            {
                 children: [{
-                    element: <BackOfficeLayout />,
-                    children: [
-                        { path: Paths.backoffice.clients, Component: Clients }
-                    ]
+                    element: <AuthBackofficeProtected />,
+                    children: [{
+                        element: <BackOfficeLayout />,
+                        children: [
+                            { path: Paths.backoffice.clients, Component: Clients },
+                            { path: Paths.backoffice.users, Component: Users }
+                        ]
+                    }]
                 }]
-            }]},
+            },
         ],
     }],
 }];
