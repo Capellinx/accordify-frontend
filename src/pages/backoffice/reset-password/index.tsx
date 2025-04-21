@@ -37,7 +37,7 @@ export function ResetPassword() {
          </CardHeader>
          <CardContent className="">
             <Form {...form}>
-               <form onSubmit={form.handleSubmit((v) => onSubmit(v))}>
+               <form onSubmit={form.handleSubmit((v) => onSubmit(v.email))}>
                   <div className="flex flex-col gap-4">
                      <div>
                         <FormField
