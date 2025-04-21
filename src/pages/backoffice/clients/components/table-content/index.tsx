@@ -1,11 +1,23 @@
-import { useFetchAllClients } from "../../hooks/use-fetch-all-clients"
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Client } from "../create-client-modal/schemas/client.schema";
+import { Client } from "../../schemas/client.schema";
 
-export function TableContent() {
-      const { listClients, isLoading } = useFetchAllClients()
-   
+type Clients = {
+   clients: {
+      id: string
+      socialReason: string
+      email: string,
+      cnpj: string,
+      createdAt: string
+      updatedAt: string
+   }[]
+}
+interface TableContentProps {
+   listClients: Clients | undefined
+   isLoading: boolean
+}
+
+export function TableContent({ listClients, isLoading }: TableContentProps) {
    return (
       <>
          {isLoading ? (
