@@ -1,6 +1,6 @@
 import { useDecodeToken } from "@/hooks/use-decode-token"
 import { useQuery } from "@tanstack/react-query"
-import { fetchAllClientsGetaway } from "../getaways"
+import { fetchAllClientsGetaway } from "../pages/backoffice/clients/getaways"
 
 
 export function useFetchAllClients() {
