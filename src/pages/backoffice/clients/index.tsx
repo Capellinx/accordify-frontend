@@ -7,10 +7,12 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { useModal } from "@/hooks/use-modal";
 import { Plus, Search } from "lucide-react";
 import { TableContent } from './components/table-content/index';
+import { useFetchAllClients } from "./hooks/use-fetch-all-clients";
 
 
 export function Clients() {
    const { open } = useModal()
+   const { listClients, isLoading } = useFetchAllClients()
 
    return (
       <section className="w-full">
@@ -53,7 +55,10 @@ export function Clients() {
                               </TableRow>
                            </TableHeader>
                            <TableBody>
-                              <TableContent />
+                              <TableContent
+                                 listClients={listClients}
+                                 isLoading={isLoading}
+                              />
                            </TableBody>
                         </Table>
                      </div>
