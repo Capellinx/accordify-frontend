@@ -7,12 +7,14 @@ export type FetchAllClientsRequest = {
 }
 
 export type FetchAllClientsResponse = {
-   id: string
-   socialReason: string
-   email: string,
-   cnpj: string,
-   createdAt: string
-   updatedAt: string
+   clients: {
+      id: string
+      socialReason: string
+      email: string,
+      cnpj: string,
+      createdAt: string
+      updatedAt: string
+   }[]
 }
 
 export type FecthAllClientsAction = {
