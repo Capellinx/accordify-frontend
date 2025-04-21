@@ -7,7 +7,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { useModal } from "@/hooks/use-modal";
 import { Plus, Search } from "lucide-react";
 import { TableContent } from './components/table-content/index';
-import { useFetchAllClients } from "./hooks/use-fetch-all-clients";
+import { useFetchAllClients } from "../../../hooks/use-fetch-all-clients";
 
 
 export function Clients() {
