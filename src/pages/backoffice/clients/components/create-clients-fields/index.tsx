@@ -5,7 +5,7 @@ import { Upload } from "lucide-react";
 import userImage from "@/assets/png/user.png"
 import { useRef, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
-import { useCreateClientForm } from "../../../hooks/use-create-client-form";
+import { useCreateClientForm } from "../../hooks/use-create-client-form";
 
 export function CreateClientForm() {
    const [logo, setLogo] = useState<string | null>(null);
@@ -109,7 +109,7 @@ export function CreateClientForm() {
                      data-testid="loader"
                   />
                ) : (
-                  <p className="text-white">Entrar</p>
+                  <p className="text-white">Cadastrar</p>
                )}
             </Button>
          </form>
