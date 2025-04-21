@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
-import axios, { AxiosError } from "axios"
+import { AxiosError } from "axios"
 import { useState } from "react"
-import { Client, clientSchema } from "../components/create-client-modal/schemas/client.schema"
+import { Client, clientSchema } from "../schemas/client.schema"
 import { useModal } from "@/hooks/use-modal"
 import { useDecodeToken } from "@/hooks/use-decode-token"
+import { createClientGetaway } from "../getaways"
 
 
 export function useCreateClientForm() {
-   const { id: managerId , access_token } = useDecodeToken()
+   const { id: managerId, access_token: accessToken } = useDecodeToken()
    const [error, setError] = useState<string | null>(null)
    
    const key = 'create-client-id'
@@ -31,7 +32,13 @@ export function useCreateClientForm() {
    const { mutate, isPending } = useMutation({
       mutationKey: [key],
       mutationFn: async (data: Client) => {
-         return onSubmit(data)
+         const { body } = await createClientGetaway.create({
+            ...data,
+            managerId,
+            accessToken
+         })
+
+         return body
       },
       onMutate: () => {
          const toastId = toast.loading('Criando cliente...')
@@ -59,19 +66,6 @@ export function useCreateClientForm() {
          close()
       }
    })
-
-   async function onSubmit(client: Client) {
-      const { data } = await axios.post("http://localhost:3333/backoffice/client", {
-         ...client,
-         managerId
-      }, {
-         headers: {
-            Authorization: `Bearer ${access_token}`
-         }
-      })
-
-      return data
-   }
 
    return {
       form,

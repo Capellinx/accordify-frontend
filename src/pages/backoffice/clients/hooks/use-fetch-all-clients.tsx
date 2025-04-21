@@ -1,21 +1,20 @@
 import { useDecodeToken } from "@/hooks/use-decode-token"
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
+import { fetchAllClientsGetaway } from "../getaways"
 
 
 export function useFetchAllClients() {
-   const { id, access_token } = useDecodeToken()
+   const { id: managerId, access_token: accessToken } = useDecodeToken()
    const key = 'fetch-all-clients'
 
    const { data, isLoading } = useQuery({
       queryKey: [key],
       queryFn: async () => {
-         const { data } = await axios.get(`http://localhost:3333/backoffice/clients?id=${id}`, {
-            headers: {
-               Authorization: `Bearer ${access_token}`
-            }
+         const { body } = await fetchAllClientsGetaway.getAll({ 
+            managerId,
+            accessToken  
          })
-         return data
+         return body
       }
    })
 
