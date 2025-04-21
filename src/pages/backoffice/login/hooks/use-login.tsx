@@ -1,12 +1,15 @@
 import { useAuthBackOffice } from "@/hooks/useAuthBackoffice"
-import { api } from "@/lib/axios"
-import { ENDPOINTS } from "@/shared/endpoints"
 import { Paths } from "@/shared/paths"
 import { useMutation } from "@tanstack/react-query"
 import { AxiosError } from "axios"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
+import { LoginManagerGetaway } from "../gateway/login-manager-getaway"
+import { httClientFactory } from "@/api/httpClient"
+import { loginSchema, LoginSchema } from "../schema/login-schema"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface LoginRequest {
    email: string
@@ -26,17 +29,24 @@ export function useBackofficeLogin() {
 
    const navigate = useNavigate()
 
+   const form = useForm<LoginSchema>({
+      defaultValues: {
+         email: "",
+         password: ""
+      },
+      resolver: zodResolver(loginSchema)
+   })
+
    const { mutate, isPending } = useMutation({
       mutationKey: ['backoffice-login'],
       mutationFn: async ({ email, password }: LoginRequest) => {
-         const { data } = await api.post(ENDPOINTS.BACKOFFICE.LOGIN, {
+         const loginGetaway = new LoginManagerGetaway(httClientFactory())
+         const { body } = await loginGetaway.login({
             email,
             password
          })
 
-         setError(null)
-
-         return data
+         return body
       },
       onSuccess: ({ manager: { name }, access_token }: LoginResponse) => {
          setInformationOnLocalStorage({
@@ -49,18 +59,21 @@ export function useBackofficeLogin() {
             duration: 3000,
             position: 'top-right'
          })
+         form.reset()
       },
       onError: (error) => {
          if (error instanceof AxiosError) {
-               toast.error('Login failed. Please try again.')
+            toast.error('Login failed. Please try again.')
             setError(error.response?.data)
          }
+         form.reset()
       }
    })
 
    return {
       submitLogin: mutate,
       isPending,
-      error
+      error,
+      form
    }
 }
