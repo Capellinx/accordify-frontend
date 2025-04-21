@@ -6,7 +6,7 @@ import {
    DialogTitle,
 } from "@/components/ui/dialog"
 import { useModal } from "@/hooks/use-modal"
-import { CreateClientForm } from "./components/create-client-form"
+import { CreateClientForm } from "../create-clients-fields"
 
 export function CreateClientModal() {
    const { isOpen, close } = useModal()
