@@ -1,10 +1,9 @@
 import { useMutation } from "@tanstack/react-query"
-import axios  from "axios"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { ForgotPassordProps, forgotPasswordSchema } from "../schema/forgot-password.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-
+import { resetPasswordGetaway } from "../getaway"
 
 export function useForgotPasswordForm() {
    const key = 'forgot-password'
@@ -18,8 +17,10 @@ export function useForgotPasswordForm() {
 
    const { mutate, isPending } = useMutation({
       mutationKey: [key],
-      mutationFn: async (email: ForgotPassordProps) => {
-         return onSubmit(email)
+      mutationFn: async (email: string) => {
+         const { body } = await resetPasswordGetaway.reset({ email })
+
+         return body
       },
       onMutate: () => {
          const toastId = toast.loading('Enviando email...')
@@ -38,12 +39,7 @@ export function useForgotPasswordForm() {
          form.reset()
       }
    })
-
-   async function onSubmit(email: ForgotPassordProps) {
-      const { data } = await axios.post('http://localhost:3333/backoffice/forgot-password', email)
-
-      return data
-   }
+ 
    return {
       form,
       onSubmit: mutate,
