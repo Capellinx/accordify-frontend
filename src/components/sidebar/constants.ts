@@ -20,7 +20,7 @@ export const SIDEBAR_CONTROL = {
       },
       {
          name: "Usuários",
-         url: "#",
+         url: Paths.backoffice.users,
          icon: Map,
       },
       {
