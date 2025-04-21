@@ -15,9 +15,6 @@ import {
    FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useForm } from "react-hook-form"
-import { loginSchema, LoginSchema } from "./schema/login-schema"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useBackofficeLogin } from "./hooks/use-login"
 import { useState } from "react"
 import { Eye, EyeClosedIcon, TriangleAlert } from "lucide-react"
@@ -26,25 +23,7 @@ import { Paths } from "@/shared/paths"
 
 export function Login() {
    const [showPassword, setShowPassword] = useState(false)
-
-   const { submitLogin, isPending, error } = useBackofficeLogin()
-
-   const form = useForm<LoginSchema>({
-      defaultValues: {
-         email: "",
-         password: ""
-      },
-      resolver: zodResolver(loginSchema)
-   })
-
-   function handleSubmit({ email, password }: LoginSchema) {
-      submitLogin({
-         email,
-         password
-      })
-
-      form.reset()
-   }
+   const { submitLogin, isPending, error, form } = useBackofficeLogin()
 
    return (
       <div className="flex flex-col gap-6 w-md" >
@@ -61,7 +40,7 @@ export function Login() {
             </CardHeader>
             <CardContent>
                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(handleSubmit)}>
+                  <form onSubmit={form.handleSubmit((v) => submitLogin(v))}>
                      <div className="grid gap-6">
                         <div className="grid gap-6">
                            <div className="grid gap-3">
@@ -143,7 +122,6 @@ export function Login() {
                </Form>
             </CardContent>
          </Card>
-
       </div>
    )
 }
