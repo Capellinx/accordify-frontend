@@ -7,8 +7,8 @@ import { AuthBackofficeProtected } from './auth-protected/auth-backoffice-protec
 import { BackOfficeLayout } from '@/layouts/backoffice-layout';
 import { ResetPassword } from '@/pages/backoffice/reset-password';
 import { Clients } from '@/pages/backoffice/clients';
-import { Users } from '@/pages/backoffice/users/table-users';
-
+import { Users } from '@/pages/backoffice/users/listing-users';
+import { NewUser } from '@/pages/backoffice/users/new-user/inde';
 
 const routes: RouteObject[] = [{
     path: '/',
@@ -29,7 +29,8 @@ const routes: RouteObject[] = [{
                         element: <BackOfficeLayout />,
                         children: [
                             { path: Paths.backoffice.clients, Component: Clients },
-                            { path: Paths.backoffice.users, Component: Users }
+                            { path: Paths.backoffice.users.list, Component: Users },
+                            { path: Paths.backoffice.users.new, Component: NewUser }
                         ]
                     }]
                 }]
