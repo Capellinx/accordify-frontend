@@ -3,6 +3,9 @@ export const Paths = {
       login: "/backoffice/login",
       clients: "/backoffice/dashboard",
       resetPassword: "/backoffice/reset-password",
-      users: "/backoffice/users",
+      users:{
+         list: "/backoffice/users",
+         new: "/backoffice/users/new"
+      }
    }
 }
