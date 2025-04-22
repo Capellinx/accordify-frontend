@@ -44,7 +44,7 @@ export function useBackofficeLogin() {
          const { body } = await loginGetaway.login({
             email,
             password
-         })
+         }) 
 
          return body
       },
@@ -53,7 +53,7 @@ export function useBackofficeLogin() {
             name,
             access_token
          })
-         navigate(Paths.backoffice.dashboard)
+         navigate(Paths.backoffice.clients)
 
          toast.success('Logged in successfully!', {
             duration: 3000,
@@ -66,7 +66,8 @@ export function useBackofficeLogin() {
             toast.error('Login failed. Please try again.')
             setError(error.response?.data)
          }
-         form.reset()
+
+         setError(error.name)
       }
    })
 
