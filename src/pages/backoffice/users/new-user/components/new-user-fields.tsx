@@ -7,17 +7,19 @@ import {
    SelectItem,
    SelectTrigger,
    SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { estadosBrasil } from "@/shared/states";
 import { UseFormReturn } from "react-hook-form";
 import { NewUserSchema } from "../schema/new-user-schema";
+import { positions } from "../data";
 
-interface NewUserFiledsProps {
+interface NewUserFieldsProps {
    form: UseFormReturn<NewUserSchema>
 }
 
-export function NewUserFields({ form }: NewUserFiledsProps) {
-   const { listClients } = useFetchAllClients()
+export function NewUserFields({ form }: NewUserFieldsProps) {
+   const { listClients } = useFetchAllClients();
+
 
    return (
       <>
@@ -67,40 +69,66 @@ export function NewUserFields({ form }: NewUserFiledsProps) {
                <FormItem>
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
-                     <Input placeholder="okeucm.23" {...field} className="py-5" />
+                     <Input
+                        {...field}
+                        placeholder="okeucm.23"
+                        className="py-5"
+                     />
                   </FormControl>
                   <FormMessage />
                </FormItem>
             )}
          />
-         <div className="col-span-2">
-            <FormField
-               control={form.control}
-               name="client"
-               render={({ field }) => (
-                  <FormItem>
-                     <FormLabel>Cliente</FormLabel>
-                     <FormControl>
-                        <Select onValueChange={field.onChange}>
-                           <SelectTrigger className="w-full col-span-3">
-                              <SelectValue placeholder="Cliente" />
-                           </SelectTrigger>
-                           <SelectContent>
-                              {listClients && listClients?.clients.map((client) => (
-                                 <SelectItem
-                                    value={client.id}
-                                    key={client.id}
-                                    className="cursor-pointer">{client.socialReason}
-                                 </SelectItem>
-                              ))}
-                           </SelectContent>
-                        </Select>
-                     </FormControl>
-                     <FormMessage />
-                  </FormItem>
-               )}
-            />
-         </div>
+         <FormField
+            control={form.control}
+            name="clientId"
+            render={({ field }) => (
+               <FormItem>
+                  <FormLabel>Cliente</FormLabel>
+                  <FormControl>
+                     <Select onValueChange={field.onChange}>
+                        <SelectTrigger className="w-full col-span-3">
+                           <SelectValue placeholder="Cliente" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           {listClients?.clients.map((client) => (
+                              <SelectItem
+                                 value={client.id}
+                                 key={client.id}
+                                 className="cursor-pointer"
+                              >
+                                 {client.socialReason}
+                              </SelectItem>
+                           ))}
+                        </SelectContent>
+                     </Select>
+                  </FormControl>
+                  <FormMessage />
+               </FormItem>
+            )}
+         />
+         <FormField
+            control={form.control}
+            name="position"
+            render={({ field }) => (
+               <FormItem>
+                  <FormLabel>Permissão</FormLabel>
+                  <FormControl>
+                     <Select onValueChange={field.onChange}>
+                        <SelectTrigger className="w-full col-span-3">
+                           <SelectValue placeholder="Tipo de acesso" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           <SelectItem className="cursor-pointer" value="user">Sales</SelectItem>
+                           <SelectItem className="cursor-pointer" value="user">Lawyer</SelectItem>
+                           <SelectItem className="cursor-pointer" value="user">Master</SelectItem>
+                        </SelectContent>
+                     </Select>
+                  </FormControl>
+                  <FormMessage />
+               </FormItem>
+            )}
+         />
          <FormField
             control={form.control}
             name="position"
@@ -108,7 +136,22 @@ export function NewUserFields({ form }: NewUserFiledsProps) {
                <FormItem>
                   <FormLabel>Cargo</FormLabel>
                   <FormControl>
-                     <Input placeholder="" {...field} className="py-5 col-span-1" />
+                     <Select onValueChange={field.onChange}>
+                        <SelectTrigger className="w-full col-span-3">
+                           <SelectValue placeholder="Cargo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                           {positions?.map((position) => (
+                              <SelectItem
+                                 value={position.name}
+                                 key={position.id}
+                                 className="cursor-pointer"
+                              >
+                                 {position.name}
+                              </SelectItem>
+                           ))}
+                        </SelectContent>
+                     </Select>
                   </FormControl>
                   <FormMessage />
                </FormItem>
@@ -123,15 +166,16 @@ export function NewUserFields({ form }: NewUserFiledsProps) {
                   <FormControl>
                      <Select onValueChange={field.onChange}>
                         <SelectTrigger className="w-full">
-                           <SelectValue placeholder="Cliente" />
+                           <SelectValue placeholder="Estado" />
                         </SelectTrigger>
                         <SelectContent>
-                           {estadosBrasil?.map((client) => (
+                           {estadosBrasil?.map((state) => (
                               <SelectItem
-                                 value={client.sigla}
-                                 key={client.sigla}
-
-                                 className="cursor-pointer">{client.sigla}
+                                 value={state.sigla}
+                                 key={state.sigla}
+                                 className="cursor-pointer"
+                              >
+                                 {state.sigla}
                               </SelectItem>
                            ))}
                         </SelectContent>
@@ -142,5 +186,5 @@ export function NewUserFields({ form }: NewUserFiledsProps) {
             )}
          />
       </>
-   )
+   );
 }

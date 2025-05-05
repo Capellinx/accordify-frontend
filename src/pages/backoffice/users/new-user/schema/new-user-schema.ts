@@ -11,16 +11,17 @@ export const newUserSchema = z.object({
       .string({ required_error: "E-mail é obrigatório" })
       .email({ message: "E-mail inválido" }),
    password: z
-      .string()
-      .optional(),
+      .string(),
    state: z
-      .string()
-      .optional(),
+      .string(),
    position: z
-      .string()
-      .optional(),
-   client: z
-      .string()
+      .string(),
+   active: z
+      .boolean(),
+   clientId: z
+      .string(),
+   permission: z
+      .string(),
 })
 
 

@@ -2,24 +2,13 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { Card, CardContent } from "@/components/ui/card";
 import { Paths } from "@/shared/paths";
 import { NewUserFields } from "./components/new-user-fields";
-import { Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NewUserSchema, newUserSchema } from "./schema/new-user-schema";
+import { useCreateUserForm } from "./hooks/use-create-new-user";
 
 export function NewUser() {
-   const form = useForm<NewUserSchema>({
-      resolver: zodResolver(newUserSchema)
-   })
-
-
-   function onSubmit(data: NewUserSchema) {
-      console.log(data);
-   }
-
-   console.log(form.formState.errors);
+   const { form, onSubmit} = useCreateUserForm()
 
    return (
       <section className="w-full">
@@ -36,7 +25,7 @@ export function NewUser() {
             </header>
             <div className="mt-10">
                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <form onSubmit={form.handleSubmit((v) => onSubmit(v))}>
                      <Card>
                         <CardContent className="grid grid-cols-2 gap-4">
                            <NewUserFields form={form} />
@@ -44,11 +33,26 @@ export function NewUser() {
                      </Card>
                      <footer className="flex items-center justify-between mt-4">
                         <div className="flex items-center gap-3">
-                           <Switch className="cursor-pointer" />
+                           <FormField
+                              control={form.control}
+                              name="active"
+                              render={({ field }) => (
+                                 <FormItem>
+                                    <FormControl>
+                                       <Switch
+                                          checked={field.value}
+                                          onCheckedChange={field.onChange}
+                                          className="cursor-pointer"
+                                       />
+                                    </FormControl>
+                                 </FormItem>
+                              )}
+                           />
                            <p>Ativo</p>
                         </div>
                         <Button
                            className="bg-[#2C7FFF] cursor-pointer hover:bg-[#1F5AC7]"
+                           aria-label="Criar usuário"
                         >
                            Criar usuário
                         </Button>

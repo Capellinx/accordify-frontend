@@ -5,6 +5,7 @@ export const endpoints = {
       login: `${baseURL}/backoffice/session`,
       resetPassword: `${baseURL}/backoffice/forgot-password`,
       getAllClientsOfManager: (managerId: string | number) => `${baseURL}/backoffice/clients?id=${managerId}`,
-      create: `${baseURL}/backoffice/client`
+      create: `${baseURL}/backoffice/client`,
+      user: `${baseURL}/backoffice/user`
    }
 }
